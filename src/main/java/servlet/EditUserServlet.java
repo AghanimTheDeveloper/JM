@@ -19,7 +19,7 @@ public class EditUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = dbService.getUserById(Long.parseLong(req.getParameter("id")));
         req.getServletContext().setAttribute("user", user);
-        req.getRequestDispatcher("/edituser.jsp").forward(req, resp);
+        req.getRequestDispatcher("/edit.jsp").forward(req, resp);
     }
 
     @Override

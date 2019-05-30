@@ -19,8 +19,8 @@
         <td>Name</td>
         <td>Login</td>
         <td>Password</td>
-        <td>Dell</td>
-        <td>Update</td>
+        <td>Delete</td>
+        <td>Edit</td>
     </tr>
     <c:forEach var="user" items="${users}">
         <tr>
