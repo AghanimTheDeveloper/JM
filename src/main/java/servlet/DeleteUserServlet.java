@@ -17,6 +17,6 @@ public class DeleteUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         dbService.deleteUser(Long.parseLong(req.getParameter("id")));
-        req.getRequestDispatcher("admin").forward(req, resp);
+        req.getRequestDispatcher("/admin").forward(req, resp);
     }
 }

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Add user", value = "/adduser")
+@WebServlet(name = "Add user", value = "/add")
 public class AddUserServlet extends HttpServlet {
     private final DBService dbService = new DBServiceJDBCImpl();
 
