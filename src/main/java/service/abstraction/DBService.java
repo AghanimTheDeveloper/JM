@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface DBService {
-    long addUser(User user);
+    User addUser(User user);
 
     User getUserById(long id);
 
@@ -14,7 +14,7 @@ public interface DBService {
 
     long getIdByName(String name) throws SQLException;
 
-    void editUser(User user);
+    User editUser(User user);
 
     void deleteUser(long id);
 

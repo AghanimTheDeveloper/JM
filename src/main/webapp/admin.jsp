@@ -27,7 +27,7 @@
             <td>${user.getId()}</td>
             <td>${user.getName()}</td>
             <td>${user.getLogin()}</td>
-            <td>${user.getPassword}</td>
+            <td>${user.getPassword()}</td>
             <td><a href="/delete?id=${user.getId()}">Delete</a></td>
             <td><a href="/edit?id=${user.getId()}">Edit</a></td>
         </tr>

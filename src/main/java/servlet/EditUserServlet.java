@@ -17,13 +17,15 @@ public class EditUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = dbService.getUserById(Long.parseLong(req.getParameter("id")));
+        User user = dbService.getUserById(Long.valueOf(req.getParameter("id")));
         req.getServletContext().setAttribute("user", user);
         req.getRequestDispatcher("/edit.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = Long.valueOf(req.getParameter("id"));
+        User user = dbService.getUserById(id);
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
@@ -33,10 +35,12 @@ public class EditUserServlet extends HttpServlet {
             resp.getWriter().println("Please fill in all fields");
         }
 
-        User user = new User(name, login, password);
+        user.setName(name);
+        user.setLogin(login);
+        user.setPassword(password);
 
         dbService.editUser(user);
 
-        req.getRequestDispatcher("/admin").forward(req, resp);
+        resp.sendRedirect("/admin");
     }
 }

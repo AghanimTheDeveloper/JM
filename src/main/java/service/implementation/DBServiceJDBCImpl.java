@@ -5,6 +5,7 @@ import dao.implementation.UserDAOJDBCImpl;
 import model.User;
 import service.abstraction.DBService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -19,7 +20,7 @@ public class DBServiceJDBCImpl implements DBService {
 
         try {
             connection = getMysqlConnection();
-        } catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+        } catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
 
@@ -27,8 +28,9 @@ public class DBServiceJDBCImpl implements DBService {
     }
 
     @Override
-    public long addUser(User user) {
-        return userDAO.addUser(user);
+    public User addUser(User user) {
+        userDAO.addUser(user);
+        return user;
     }
 
     @Override
@@ -47,8 +49,9 @@ public class DBServiceJDBCImpl implements DBService {
     }
 
     @Override
-    public void editUser(User user) {
+    public User editUser(User user) {
         userDAO.editUser(user);
+        return user;
     }
 
     @Override
@@ -61,8 +64,8 @@ public class DBServiceJDBCImpl implements DBService {
         return userDAO.getAllUsers();
     }
 
-    private static Connection getMysqlConnection() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
+    private static Connection getMysqlConnection() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
+        DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").getConstructor().newInstance());
 
         StringBuilder url = new StringBuilder();
 
