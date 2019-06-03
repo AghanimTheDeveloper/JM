@@ -44,7 +44,7 @@ public class DBServiceJDBCImpl implements DBService {
     }
 
     @Override
-    public long getIdByName(String name) throws SQLException{
+    public long getIdByName(String name){
         return userDAO.getIdByName(name);
     }
 

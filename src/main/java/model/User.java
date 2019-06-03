@@ -1,10 +1,30 @@
 package model;
 
-public class User {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name="users")
+public class User implements Serializable{
+    private static final long serialVersionUID = 3383929911027575770L;
+
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name="name", unique = true)
     private String name;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "password")
     private String password;
+
+    @SuppressWarnings("UnusedDeclaration")
+    public User() {
+    }
 
     public User(Long id, String name, String login, String password) {
         this.id = id;
@@ -23,6 +43,7 @@ public class User {
         return id;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setId(Long id) {
         this.id = id;
     }
@@ -39,6 +60,7 @@ public class User {
         return login;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setLogin(String login) {
         this.login = login;
     }
@@ -47,6 +69,7 @@ public class User {
         return password;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setPassword(String password) {
         this.password = password;
     }
