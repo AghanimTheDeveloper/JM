@@ -4,13 +4,13 @@ import dao.abstraction.UserDAO;
 import model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOHibernateImpl implements UserDAO {
@@ -27,7 +27,9 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public User addUser(User user) {
         Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         session.save(user);
+        transaction.commit();
         return user;
     }
 
@@ -58,15 +60,19 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public User editUser(User user) {
         Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         session.update(user);
+        transaction.commit();
         return user;
     }
 
     @Override
     public void deleteUser(long id) {
         Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         User user = session.load(User.class, id);
         session.delete(user);
+        transaction.commit();
     }
 
     @Override

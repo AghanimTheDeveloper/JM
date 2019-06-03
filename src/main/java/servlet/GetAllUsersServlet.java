@@ -16,8 +16,10 @@ public class GetAllUsersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         req.setAttribute("users", dbService.getAllUsers());
         req.getServletContext().getRequestDispatcher("/admin.jsp").forward(req, resp);
+        resp.setCharacterEncoding("UTF-8");
     }
 
     @Override

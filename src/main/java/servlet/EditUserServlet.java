@@ -18,6 +18,7 @@ public class EditUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         User user = dbService.getUserById(Long.valueOf(req.getParameter("id")));
         req.getServletContext().setAttribute("user", user);
         req.getRequestDispatcher("/edit.jsp").forward(req, resp);
@@ -25,6 +26,7 @@ public class EditUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         long id = Long.valueOf(req.getParameter("id"));
         String name = req.getParameter("name");
         String login = req.getParameter("login");
@@ -33,7 +35,6 @@ public class EditUserServlet extends HttpServlet {
         User user = new User(id, name, login, password);
 
         dbService.editUser(user);
-
         resp.sendRedirect("/admin");
     }
 }
