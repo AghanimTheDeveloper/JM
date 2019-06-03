@@ -35,7 +35,7 @@ public class AddUserServlet extends HttpServlet {
 
         dbService.addUser(user);
 
-        req.setAttribute("user", user);
-        req.getRequestDispatcher("/admin").forward(req, resp);
+        resp.setContentType("text/html;charset=utf-8");
+        resp.sendRedirect("/admin");
     }
 }

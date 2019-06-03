@@ -1,7 +1,7 @@
 package service.implementation;
 
 import dao.abstraction.UserDAO;
-import dao.implementation.UserDAOJDBCImpl;
+import dao.implementation.UserDAOImpl;
 import model.User;
 import service.abstraction.DBService;
 
@@ -24,7 +24,7 @@ public class DBServiceJDBCImpl implements DBService {
             e.printStackTrace();
         }
 
-        this.userDAO = new UserDAOJDBCImpl(connection);
+        this.userDAO = new UserDAOImpl(connection);
     }
 
     @Override

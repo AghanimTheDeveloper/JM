@@ -13,7 +13,7 @@ public interface UserDAO {
 
     User getUserByName(String name);
 
-    long getIdByName(String name) throws SQLException;
+    long getIdByName(String name);
 
     User editUser(User user);
 

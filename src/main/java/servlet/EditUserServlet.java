@@ -25,19 +25,11 @@ public class EditUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long id = Long.valueOf(req.getParameter("id"));
-        User user = dbService.getUserById(id);
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        if (name.equals("") | login.equals("") | password.equals("")){
-            resp.setContentType("text/html");
-            resp.getWriter().println("Please fill in all fields");
-        }
-
-        user.setName(name);
-        user.setLogin(login);
-        user.setPassword(password);
+        User user = new User(id, name, login, password);
 
         dbService.editUser(user);
 

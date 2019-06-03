@@ -11,7 +11,7 @@
     <title>Edit user page</title>
 </head>
 <body>
-<form action="/edit" method="get">
+<form action="/edit" method="post">
     <table border="2">
         <tr>
             <td>Id</td>
@@ -26,8 +26,6 @@
             <td><input type="text" name="password" value="${user.getPassword()}"/></td>
         </tr>
     </table>
-</form>
-<form action="/edit" method="post">
     <br><input type="submit" value="Edit user"></br>
 </form>
 <a href="/admin">To main</a>
