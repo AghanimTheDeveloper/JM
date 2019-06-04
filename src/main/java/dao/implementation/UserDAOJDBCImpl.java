@@ -1,33 +1,20 @@
 package dao.implementation;
 
 import dao.abstraction.UserDAO;
+import dao.util.DBHelper;
 import model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO {
+public class UserDAOJDBCImpl implements UserDAO {
     private Connection connection;
     private PreparedStatement ps;
 
-    public Connection getConnection()
-    {
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection
-                    ("jdbc:mysql://localhost:3306/jm-preproject?user=root&password=root");
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error in connection" + e);
-        }
-        return connection;
-    }
 
-    public UserDAOImpl(Connection connection) {
-        this.connection = connection;
+    public UserDAOJDBCImpl() {
+        this.connection = DBHelper.getInstance().getConnection();
     }
 
 

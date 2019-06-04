@@ -2,8 +2,7 @@ package servlet;
 
 import model.User;
 import service.abstraction.DBService;
-import service.implementation.DBServiceHibernateImpl;
-import service.implementation.DBServiceJDBCImpl;
+import service.abstraction.DBServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,15 @@ import java.io.IOException;
 
 @WebServlet(name = "Edit user", value = "/edit")
 public class EditUserServlet extends HttpServlet {
-    private final DBService dbService = new DBServiceHibernateImpl();
+    private DBService dbService = null;
+
+    {
+        try {
+            dbService = DBServiceFactory.getDBService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
