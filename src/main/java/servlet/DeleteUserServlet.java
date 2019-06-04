@@ -1,5 +1,6 @@
 package servlet;
 
+import lombok.SneakyThrows;
 import service.abstraction.DBService;
 import service.implementation.DBServiceHibernateImpl;
 
@@ -15,7 +16,8 @@ public class DeleteUserServlet extends HttpServlet {
     private final DBService dbService = new DBServiceHibernateImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @SneakyThrows
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         req.setCharacterEncoding("UTF-8");
         long id = Long.valueOf(req.getParameter("id"));
         dbService.deleteUser(id);

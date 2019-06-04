@@ -1,5 +1,6 @@
 package servlet;
 
+import lombok.SneakyThrows;
 import model.User;
 import service.abstraction.DBService;
 import service.implementation.DBServiceHibernateImpl;
@@ -17,7 +18,8 @@ public class EditUserServlet extends HttpServlet {
     private final DBService dbService = new DBServiceHibernateImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @SneakyThrows
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         req.setCharacterEncoding("UTF-8");
         User user = dbService.getUserById(Long.valueOf(req.getParameter("id")));
         req.getServletContext().setAttribute("user", user);
@@ -25,7 +27,8 @@ public class EditUserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @SneakyThrows
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         req.setCharacterEncoding("UTF-8");
         long id = Long.valueOf(req.getParameter("id"));
         String name = req.getParameter("name");

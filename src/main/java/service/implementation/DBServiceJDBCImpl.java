@@ -2,29 +2,20 @@ package service.implementation;
 
 import dao.abstraction.UserDAO;
 import dao.implementation.UserDAOImpl;
+import lombok.SneakyThrows;
 import model.User;
 import service.abstraction.DBService;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 
 public class DBServiceJDBCImpl implements DBService {
     private final UserDAO userDAO;
 
     public DBServiceJDBCImpl() {
-        Connection connection = null;
-
-        try {
-            connection = getMysqlConnection();
-        } catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-        this.userDAO = new UserDAOImpl(connection);
+        this.userDAO = new UserDAOImpl(getMysqlConnection());
     }
 
     @Override
@@ -64,7 +55,8 @@ public class DBServiceJDBCImpl implements DBService {
         return userDAO.getAllUsers();
     }
 
-    private static Connection getMysqlConnection() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
+    @SneakyThrows
+    private static Connection getMysqlConnection() {
         DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").getConstructor().newInstance());
 
         StringBuilder url = new StringBuilder();

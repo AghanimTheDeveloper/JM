@@ -1,6 +1,7 @@
 package dao.implementation;
 
 import dao.abstraction.UserDAO;
+import lombok.Cleanup;
 import model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,7 +11,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAOHibernateImpl implements UserDAO {
@@ -23,10 +23,9 @@ public class UserDAOHibernateImpl implements UserDAO {
         sessionFactory = createSessionFactory(configuration);
     }
 
-
     @Override
     public User addUser(User user) {
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(user);
         transaction.commit();
@@ -36,7 +35,7 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public User getUserById(long id) {
         User user;
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         user = session.load(User.class, id);
         return user;
     }
@@ -44,7 +43,7 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public User getUserByName(String name) {
         User user;
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         user = session.load(User.class, name);
         return user;
     }
@@ -52,14 +51,14 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public long getIdByName(String name) {
         long id;
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         id = session.load(User.class, name).getId();
         return id;
     }
 
     @Override
     public User editUser(User user) {
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(user);
         transaction.commit();
@@ -68,7 +67,7 @@ public class UserDAOHibernateImpl implements UserDAO {
 
     @Override
     public void deleteUser(long id) {
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         User user = session.load(User.class, id);
         session.delete(user);
@@ -77,13 +76,13 @@ public class UserDAOHibernateImpl implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         return (List<User>) session.createQuery("from User").getResultList();
     }
 
     @Override
     @SuppressWarnings("UnusedDeclaration")
-    public void getUser(ResultSet result, List<User> urList) throws SQLException {
+    public void getUser(ResultSet result, List<User> urList) {
 
     }
 

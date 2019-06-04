@@ -27,7 +27,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public UserDAOImpl(Connection connection) {
-        this.connection = connection;
+        this.connection = getConnection();
     }
 
 
