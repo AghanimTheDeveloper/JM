@@ -2,20 +2,15 @@ package service.implementation;
 
 import dao.abstraction.UserDAO;
 import dao.implementation.UserDAOImpl;
-import lombok.SneakyThrows;
 import model.User;
 import service.abstraction.DBService;
-
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
 import java.util.List;
 
 public class DBServiceJDBCImpl implements DBService {
     private final UserDAO userDAO;
 
     public DBServiceJDBCImpl() {
-        this.userDAO = new UserDAOImpl(getMysqlConnection());
+        this.userDAO = new UserDAOImpl();
     }
 
     @Override
@@ -53,24 +48,5 @@ public class DBServiceJDBCImpl implements DBService {
     @Override
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
-    }
-
-    @SneakyThrows
-    private static Connection getMysqlConnection() {
-        DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").getConstructor().newInstance());
-
-        StringBuilder url = new StringBuilder();
-
-        url.
-                append("jdbc:mysql://").        //db type
-                append("localhost:").           //host name
-                append("3306/").                //port
-                append("jm-preproject?").       //db name
-                append("user=root&").          //login
-                append("password=root");       //password
-
-        System.out.println("URL: " + url + "\n");
-
-        return DriverManager.getConnection(url.toString());
     }
 }

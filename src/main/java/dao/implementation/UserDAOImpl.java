@@ -1,6 +1,7 @@
 package dao.implementation;
 
 import dao.abstraction.UserDAO;
+import lombok.SneakyThrows;
 import model.User;
 
 import java.sql.*;
@@ -11,138 +12,104 @@ public class UserDAOImpl implements UserDAO {
     private Connection connection;
     private PreparedStatement ps;
 
-    public Connection getConnection()
-    {
-        try
-        {
+    @SneakyThrows
+    private Connection getConnection() {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection
+            return DriverManager.getConnection
                     ("jdbc:mysql://localhost:3306/jm-preproject?user=root&password=root");
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error in connection" + e);
-        }
-        return connection;
     }
 
-    public UserDAOImpl(Connection connection) {
+    public UserDAOImpl() {
         this.connection = getConnection();
     }
 
 
     @Override
+    @SneakyThrows
     public User addUser(User user) {
-        try {
             ps = connection.prepareStatement("INSERT INTO users VALUES (id, ?, ?, ?)");
             ps.setString(1, user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return user;
     }
 
     @Override
+    @SneakyThrows
     public User getUserById(long id) {
-        User user = null;
-        try {
             ps = connection.prepareStatement("SELECT * FROM users WHERE id=?");
             ps.setLong(1, id);
             ResultSet set = ps.executeQuery();
             set.next();
-            user = new User(
+            return new User(
                     set.getLong(1),
                     set.getString(2),
                     set.getString(3),
                     set.getString(4)
             );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
     }
 
     @Override
+    @SneakyThrows
     public User getUserByName(String name) {
-        User user = null;
-        try {
             ps = connection.prepareStatement("SELECT * FROM users WHERE name=?");
             ps.setString(1, name);
             ResultSet set = ps.executeQuery();
             set.next();
-            user = new User(
+            return new User(
                     set.getLong(1),
                     set.getString(2),
                     set.getString(3),
                     set.getString(4)
             );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
     }
 
     @Override
+    @SneakyThrows
     public long getIdByName(String name){
-        Long id = null;
-        try {
             ps = connection.prepareStatement("SELECT * FROM users WHERE name=?");
             ps.setString(1, name);
             ResultSet set = ps.executeQuery();
             set.next();
-            id = set.getLong(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id;
+            return set.getLong(1);
     }
 
     @Override
+    @SneakyThrows
     public User editUser(User user) {
-        try {
             ps = connection.prepareStatement("UPDATE users SET name=?, login=?, password=? WHERE id=?");
             ps.setString(1,user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
             ps.setLong(4, user.getId());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return user;
     }
 
     @Override
+    @SneakyThrows
     public void deleteUser(long id) {
-        try {
             ps = connection.prepareStatement("DELETE FROM users WHERE id=?");
             ps.setLong(1, id);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
+    @SneakyThrows
     public List<User> getAllUsers() {
-        List<User> userList = null;
-        try {
+        List<User> userList;
             ps = connection.prepareStatement("SELECT * FROM users");
             ResultSet set = ps.executeQuery();
             userList = new ArrayList<>();
             getUser(set, userList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return userList;
 
     }
 
     @Override
-    public void getUser(ResultSet set, List<User> userList) throws SQLException {
+    @SneakyThrows
+    public void getUser(ResultSet set, List<User> userList) {
         while (set.next()){
             userList.add(
                     new User(
