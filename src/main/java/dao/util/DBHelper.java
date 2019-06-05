@@ -46,7 +46,7 @@ public class DBHelper {
         Properties properties = new Properties();
 
         try {
-            properties.load(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("./src/main/resources/hibernate.properties")));
+            properties.load(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("hibernate.properties")));
         } catch (IOException e) {
             e.printStackTrace();
         }

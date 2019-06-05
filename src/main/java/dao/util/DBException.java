@@ -1,4 +1,4 @@
-package service.executor;
+package dao.util;
 
 
 public class DBException extends Exception {
