@@ -1,15 +1,17 @@
-package service.abstraction;
+package dao.abstraction;
 
-import service.implementation.DBServiceHibernateImpl;
-import service.implementation.DBServiceJDBCImpl;
+import dao.implementation.UserDAOHibernateImpl;
+import dao.implementation.UserDAOJDBCImpl;
+import service.abstraction.DBService;
+import service.implementation.DBServiceImpl;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
-public interface DBServiceFactory {
+public interface UserDAOFactory {
 
-    static DBService getDBService()throws IOException{
+    static UserDAO getUserDAO()throws IOException{
         String usedTech = null;
         Properties properties = new Properties();
         try {
@@ -19,9 +21,9 @@ public interface DBServiceFactory {
             e.printStackTrace();
         }
         if(usedTech.equals("jdbc")){
-            return new DBServiceJDBCImpl();
+            return new UserDAOJDBCImpl();
         } else if (usedTech.equals("hibernate")){
-            return new DBServiceHibernateImpl();
+            return new UserDAOHibernateImpl();
         } else
             throw new IOException();
     }

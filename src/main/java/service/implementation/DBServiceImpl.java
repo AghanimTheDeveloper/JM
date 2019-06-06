@@ -1,17 +1,22 @@
 package service.implementation;
 
 import dao.abstraction.UserDAO;
-import dao.implementation.UserDAOHibernateImpl;
+import dao.abstraction.UserDAOFactory;
 import model.User;
 import service.abstraction.DBService;
 
+import java.io.IOException;
 import java.util.List;
 
-public class DBServiceHibernateImpl implements DBService {
-    private final UserDAO userDAO;
+public class DBServiceImpl implements DBService {
+    private UserDAO userDAO = null;
 
-    public DBServiceHibernateImpl() {
-        this.userDAO = new UserDAOHibernateImpl();
+    public DBServiceImpl() {
+        try {
+            this.userDAO = UserDAOFactory.getUserDAO();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

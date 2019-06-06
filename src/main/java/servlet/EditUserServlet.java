@@ -2,7 +2,8 @@ package servlet;
 
 import model.User;
 import service.abstraction.DBService;
-import service.abstraction.DBServiceFactory;
+import dao.abstraction.UserDAOFactory;
+import service.implementation.DBServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,14 +14,10 @@ import java.io.IOException;
 
 @WebServlet(name = "Edit user", value = "/edit")
 public class EditUserServlet extends HttpServlet {
-    private DBService dbService = null;
+    private DBService dbService;
 
-    {
-        try {
-            dbService = DBServiceFactory.getDBService();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public EditUserServlet() {
+        this.dbService = new DBServiceImpl();
     }
 
     @Override
