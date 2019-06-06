@@ -26,10 +26,6 @@ public class UserDAOJDBCImpl implements UserDAO {
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,10 +47,6 @@ public class UserDAOJDBCImpl implements UserDAO {
                     set.getString(3),
                     set.getString(4)
             );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,10 +68,6 @@ public class UserDAOJDBCImpl implements UserDAO {
                     set.getString(3),
                     set.getString(4)
             );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,10 +84,6 @@ public class UserDAOJDBCImpl implements UserDAO {
             ResultSet set = ps.executeQuery();
             set.next();
             id = set.getLong(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,10 +100,6 @@ public class UserDAOJDBCImpl implements UserDAO {
             ps.setString(3, user.getPassword());
             ps.setLong(4, user.getId());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -133,10 +113,6 @@ public class UserDAOJDBCImpl implements UserDAO {
             ps = connection.prepareStatement("DELETE FROM users WHERE id=?");
             ps.setLong(1, id);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -151,10 +127,6 @@ public class UserDAOJDBCImpl implements UserDAO {
             ResultSet set = ps.executeQuery();
             userList = new ArrayList<>();
             getUser(set, userList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
