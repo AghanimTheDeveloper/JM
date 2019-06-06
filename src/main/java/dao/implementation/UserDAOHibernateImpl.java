@@ -26,6 +26,7 @@ public class UserDAOHibernateImpl implements UserDAO {
         Transaction transaction = session.beginTransaction();
         session.save(user);
         transaction.commit();
+        session.close();
         return user;
     }
 
@@ -59,6 +60,7 @@ public class UserDAOHibernateImpl implements UserDAO {
         Transaction transaction = session.beginTransaction();
         session.update(user);
         transaction.commit();
+        session.close();
         return user;
     }
 
@@ -69,12 +71,15 @@ public class UserDAOHibernateImpl implements UserDAO {
         User user = session.load(User.class, id);
         session.delete(user);
         transaction.commit();
+        session.close();
     }
 
     @Override
     public List<User> getAllUsers() {
         Session session = sessionFactory.openSession();
-        return (List<User>) session.createQuery("from User").getResultList();
+        List<User> users = (List<User>) session.createQuery("from User").getResultList();
+        session.close();
+        return users;
     }
 
     @Override
