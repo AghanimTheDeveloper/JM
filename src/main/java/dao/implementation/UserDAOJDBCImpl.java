@@ -10,23 +10,18 @@ import java.util.List;
 
 public class UserDAOJDBCImpl implements UserDAO {
     private Connection connection;
-    private PreparedStatement ps;
-
 
     public UserDAOJDBCImpl() {
         this.connection = DBHelper.getInstance().getConnection();
     }
 
-
     @Override
     public User addUser(User user) {
-        try {
-            ps = connection.prepareStatement("INSERT INTO users VALUES (id, ?, ?, ?)");
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO users VALUES (id, ?, ?, ?)")) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -36,8 +31,7 @@ public class UserDAOJDBCImpl implements UserDAO {
     @Override
     public User getUserById(long id) {
         User user = null;
-        try {
-            ps = connection.prepareStatement("SELECT * FROM users WHERE id=?");
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE id=?")){
             ps.setLong(1, id);
             ResultSet set = ps.executeQuery();
             set.next();
@@ -47,7 +41,6 @@ public class UserDAOJDBCImpl implements UserDAO {
                     set.getString(3),
                     set.getString(4)
             );
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -57,8 +50,7 @@ public class UserDAOJDBCImpl implements UserDAO {
     @Override
     public User getUserByName(String name) {
         User user = null;
-        try {
-            ps = connection.prepareStatement("SELECT * FROM users WHERE name=?");
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE name=?")){
             ps.setString(1, name);
             ResultSet set = ps.executeQuery();
             set.next();
@@ -68,7 +60,6 @@ public class UserDAOJDBCImpl implements UserDAO {
                     set.getString(3),
                     set.getString(4)
             );
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -78,13 +69,11 @@ public class UserDAOJDBCImpl implements UserDAO {
     @Override
     public long getIdByName(String name){
         Long id = null;
-        try {
-            ps = connection.prepareStatement("SELECT * FROM users WHERE name=?");
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE name=?")){
             ps.setString(1, name);
             ResultSet set = ps.executeQuery();
             set.next();
             id = set.getLong(1);
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,14 +82,12 @@ public class UserDAOJDBCImpl implements UserDAO {
 
     @Override
     public User editUser(User user) {
-        try {
-            ps = connection.prepareStatement("UPDATE users SET name=?, login=?, password=? WHERE id=?");
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE users SET name=?, login=?, password=? WHERE id=?")){
             ps.setString(1,user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
             ps.setLong(4, user.getId());
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -109,11 +96,9 @@ public class UserDAOJDBCImpl implements UserDAO {
 
     @Override
     public void deleteUser(long id) {
-        try {
-            ps = connection.prepareStatement("DELETE FROM users WHERE id=?");
+        try (PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id=?")){
             ps.setLong(1, id);
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -122,12 +107,10 @@ public class UserDAOJDBCImpl implements UserDAO {
     @Override
     public List<User> getAllUsers() {
         List<User> userList = null;
-        try {
-            ps = connection.prepareStatement("SELECT * FROM users");
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users")){
             ResultSet set = ps.executeQuery();
             userList = new ArrayList<>();
             getUser(set, userList);
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
