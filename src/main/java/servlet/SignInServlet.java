@@ -29,20 +29,19 @@ public class SignInServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        User user;
+        User user = dbService.getUserByLogin(login);
 
         if (login.equals("") | password.equals("")){
             resp.setContentType("text/html");
             resp.getWriter().println("Please fill in all fields");
         }
 
-        if (dbService.getUserByLogin(login).getPassword().equals(password)){
-            user = dbService.getUserByLogin(login);
+        if (user.getPassword().equals(password)){
+            req.getSession().setAttribute("user", user);
             if (user.getRole().equals("admin")){
                 resp.sendRedirect("/admin");
-            }else{
-                req.setAttribute("user", user);
-                req.getServletContext().getRequestDispatcher("/user.jsp?id="+user.getId()).forward(req, resp);
+            }else {
+                req.getRequestDispatcher("/user.jsp?id="+ user.getId()).forward(req, resp);
             }
         }else{
             resp.sendRedirect("/index");

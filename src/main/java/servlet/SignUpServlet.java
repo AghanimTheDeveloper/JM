@@ -40,6 +40,9 @@ public class SignUpServlet extends HttpServlet {
         user.setRole("user");
 
         dbService.addUser(user);
-        resp.sendRedirect("/user.jsp?id="+user.getId());
+        req.getSession().setAttribute("user", user);
+
+        req.setAttribute("user", user);
+        req.getServletContext().getRequestDispatcher("/user.jsp?id="+user.getId()).forward(req, resp);
     }
 }
