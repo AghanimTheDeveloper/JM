@@ -1,7 +1,6 @@
 package servlet;
 
 import service.abstraction.DBService;
-import dao.abstraction.UserDAOFactory;
 import service.implementation.DBServiceImpl;
 
 import javax.servlet.ServletException;

@@ -12,17 +12,19 @@
     <title>Add user page</title>
 </head>
 <body>
-<form action="/add" method="post">
+<form action="/admin/add" method="post">
     <table border="2">
         <tr>
             <td>Name</td>
             <td>Login</td>
             <td>Password</td>
+            <td>Role</td>
         </tr>
         <tr>
             <td><input type="text" name="name"/></td>
             <td><input type="text" name="login"/></td>
             <td><input type="text" name="password"/></td>
+            <td><input type="text" name="role"/></td>
         </tr>
         <br><input type="submit" value="Add user"></br>
     </table>

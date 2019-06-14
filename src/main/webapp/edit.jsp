@@ -12,19 +12,21 @@
     <title>Edit user page</title>
 </head>
 <body>
-<form action="/edit" method="post">
+<form action="/admin/edit" method="post">
     <table border="2">
         <tr>
             <td>Id</td>
             <td>Name</td>
             <td>Login</td>
             <td>Password</td>
+            <td>Role</td>
         </tr>
         <tr>
             <td><input type="text" name="id" value="${user.getId()}"/></td>
             <td><input type="text" name="name" value="${user.getName()}"/></td>
             <td><input type="text" name="login" value="${user.getLogin()}"/></td>
             <td><input type="text" name="password" value="${user.getPassword()}"/></td>
+            <td><input type="text" name="role" value="${user.getRole()}"/></td>
         </tr>
     </table>
     <br><input type="submit" value="Edit user"></br>

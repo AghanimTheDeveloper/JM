@@ -1,7 +1,6 @@
 package servlet;
 
 import service.abstraction.DBService;
-import dao.abstraction.UserDAOFactory;
 import service.implementation.DBServiceImpl;
 
 import javax.servlet.ServletException;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Delete user", value = "/delete")
+@WebServlet(name = "Delete user", value = "/admin/delete")
 public class DeleteUserServlet extends HttpServlet {
     private DBService dbService;
 

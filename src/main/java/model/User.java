@@ -22,15 +22,26 @@ public class User implements Serializable{
     @Column(name = "password")
     private String password;
 
+    @Column(name = "role")
+    private String role;
+
     @SuppressWarnings("UnusedDeclaration")
     public User() {
     }
 
-    public User(Long id, String name, String login, String password) {
+    public User(long id, String name, String login, String password, String role) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
+        this.role = role;
+    }
+
+    public User(String name, String login, String password, String role) {
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.role = role;
     }
 
     public User(String name, String login, String password) {
@@ -74,6 +85,14 @@ public class User implements Serializable{
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -81,6 +100,7 @@ public class User implements Serializable{
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

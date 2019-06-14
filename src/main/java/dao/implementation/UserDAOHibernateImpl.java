@@ -32,26 +32,26 @@ public class UserDAOHibernateImpl implements UserDAO {
 
     @Override
     public User getUserById(long id) {
-        User user;
         Session session = sessionFactory.openSession();
-        user = session.load(User.class, id);
-        return user;
+        return session.load(User.class, id);
     }
 
     @Override
     public User getUserByName(String name) {
-        User user;
         Session session = sessionFactory.openSession();
-        user = session.load(User.class, name);
-        return user;
+        return session.load(User.class, name);
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        Session session = sessionFactory.openSession();
+        return session.load(User.class, login);
     }
 
     @Override
     public long getIdByName(String name) {
-        long id;
         Session session = sessionFactory.openSession();
-        id = session.load(User.class, name).getId();
-        return id;
+        return session.load(User.class, name).getId();
     }
 
     @Override

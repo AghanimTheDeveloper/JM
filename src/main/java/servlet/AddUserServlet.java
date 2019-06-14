@@ -2,7 +2,6 @@ package servlet;
 
 import model.User;
 import service.abstraction.DBService;
-import dao.abstraction.UserDAOFactory;
 import service.implementation.DBServiceImpl;
 
 import javax.servlet.ServletException;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Add user", value = "/add")
+@WebServlet(name = "Add user", value = "/admin/add")
 public class AddUserServlet extends HttpServlet {
     private DBService dbService;
 
@@ -31,8 +30,9 @@ public class AddUserServlet extends HttpServlet {
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        String role = req.getParameter("role");
 
-        if (name.equals("") | login.equals("") | password.equals("")){
+        if (name.equals("") | login.equals("") | password.equals("") | role.equals("")){
             resp.setContentType("text/html");
             resp.getWriter().println("Please fill in all fields");
         }

@@ -17,10 +17,11 @@ public class UserDAOJDBCImpl implements UserDAO {
 
     @Override
     public User addUser(User user) {
-        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO users VALUES (id, ?, ?, ?)")) {
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO users VALUES (id, ?, ?, ?, ?)")) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
+            ps.setString(4, user.getRole());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,7 +40,8 @@ public class UserDAOJDBCImpl implements UserDAO {
                     set.getLong(1),
                     set.getString(2),
                     set.getString(3),
-                    set.getString(4)
+                    set.getString(4),
+                    set.getString(5)
             );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,9 +60,30 @@ public class UserDAOJDBCImpl implements UserDAO {
                     set.getLong(1),
                     set.getString(2),
                     set.getString(3),
-                    set.getString(4)
+                    set.getString(4),
+                    set.getString(5)
             );
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        User user = null;
+        try (PreparedStatement ps = connection.prepareStatement("SELECT  * FROM users WHERE login=?")){
+            ps.setString(1, login);
+            ResultSet set = ps.executeQuery();
+            set.next();
+            user = new User(
+                    set.getLong(1),
+                    set.getString(2),
+                    set.getString(3),
+                    set.getString(4),
+                    set.getString(5)
+            );
+        }catch (SQLException e){
             e.printStackTrace();
         }
         return user;
@@ -82,11 +105,12 @@ public class UserDAOJDBCImpl implements UserDAO {
 
     @Override
     public User editUser(User user) {
-        try (PreparedStatement ps = connection.prepareStatement("UPDATE users SET name=?, login=?, password=? WHERE id=?")){
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE users SET name=?, login=?, password=?, role=? WHERE id=?")){
             ps.setString(1,user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
-            ps.setLong(4, user.getId());
+            ps.setString(4, user.getRole());
+            ps.setLong(5, user.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,7 +150,8 @@ public class UserDAOJDBCImpl implements UserDAO {
                             set.getLong(1),
                             set.getString(2),
                             set.getString(3),
-                            set.getString(4)
+                            set.getString(4),
+                            set.getString(5)
                     )
             );
         }

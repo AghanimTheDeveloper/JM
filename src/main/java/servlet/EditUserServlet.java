@@ -2,7 +2,6 @@ package servlet;
 
 import model.User;
 import service.abstraction.DBService;
-import dao.abstraction.UserDAOFactory;
 import service.implementation.DBServiceImpl;
 
 import javax.servlet.ServletException;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Edit user", value = "/edit")
+@WebServlet(name = "Edit user", value = "/admin/edit")
 public class EditUserServlet extends HttpServlet {
     private DBService dbService;
 
@@ -35,8 +34,9 @@ public class EditUserServlet extends HttpServlet {
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        String role = req.getParameter("role");
 
-        User user = new User(id, name, login, password);
+        User user = new User(id, name, login, password, role);
 
         dbService.editUser(user);
         resp.sendRedirect("/admin");
