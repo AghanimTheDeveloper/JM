@@ -33,6 +33,9 @@ public class DBServiceImpl implements DBService {
     public User getUserByName(String name) { return userDAO.getUserByName(name); }
 
     @Override
+    public User getUserByLogin(String login) { return userDAO.getUserByLogin(login); }
+
+    @Override
     public long getIdByName(String name) { return userDAO.getIdByName(name); }
 
     @Override

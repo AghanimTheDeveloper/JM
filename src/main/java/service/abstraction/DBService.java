@@ -11,6 +11,8 @@ public interface DBService {
 
     User getUserByName(String name);
 
+    User getUserByLogin(String login);
+
     long getIdByName(String name);
 
     User editUser(User user);
